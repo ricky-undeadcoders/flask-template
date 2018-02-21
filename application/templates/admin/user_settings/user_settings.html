@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+
+{% block title %}User Settings{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}
+    {% include "admin/user_settings/password_js.html" %}
+{% endblock %}
+
+{% block body %}
+    <div id="user_settings_title" class="section">
+        <div class="justify-content-center col-12">
+            <h2 class="page-title text-center">User Settings</h2>
+        </div>
+    </div>
+
+    <div id="password_form_wrapper" class="container col-md-6 col-lg-5">
+        {% include "admin/user_settings/password_form.html" %}
+    </div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% set id = admin_user.id %}
+{% set create_date, create_time = admin_user.create_date|split_datetime %}
+<td colspan="7">
+    <div class="col-12">
+        <hr/>
+    </div>
+    <div class="details_parent_div" style="display: none;">
+        <form id="admin_user_form_{{ id }}" class="admin-user-form">
+            <input class="hidden" name="user_id" value="{{ id }}"/>
+            <div class="row">
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>Username </label>
+                    <input class="form-control" name="username_input" type="text" value="{{ admin_user.username }}"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>First Name </label>
+                    <input class="form-control" name="first_name_input" type="text" value="{{ admin_user.first_name }}"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>Last Name </label>
+                    <input class="form-control" name="last_name_input" type="text" value="{{ admin_user.last_name }}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>Email Address </label>
+                    <input class="form-control" name="email_input" type="email" value="{{ admin_user.email }}"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-4 float-right">
+                    <label>Status </label><br>
+                    {% if admin_user.active %}
+                        <div class="btn-group status_group row-item-active">
+                            <a class="btn btn-secondary disabled status-icon" href="">
+                                <i class="fa fa-check-circle-o" title="Active"></i>
+                            </a>
+                            <a class="btn btn-secondary status-btn deactivate-row-item-btn">
+                                <i class="fa fa-toggle-on" title="Deactivate"></i>
+                            </a>
+                        </div>
+                        <input hidden="hidden" value="on" name="active_input">
+                    {% else %}
+                        <div class="btn-group status_group row-item-inactive">
+                            <a class="btn btn-secondary disabled status-icon" href="">
+                                <i class="fa fa-times-circle-o" title="Inactive"></i>
+                            </a>
+                            <a class="btn btn-secondary status-btn activate-row-item-btn">
+                                <i class="fa fa-toggle-off" title="Activate"></i>
+                            </a>
+                        </div>
+                        <input hidden="hidden" value="off" name="active_input">
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-6 col-lg-4">
+                    <input type="submit" class="btn btn-secondary float-right" value="Update" style="margin-top: 30px;"
+                           onclick="submit_admin_user_data('{{ id }}')">
+                </div>
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>Bio</label>
+                    <textarea class="form-control" name="bio_input" type="text">{{ admin_user.bio.text }}</textarea>
+                </div>
+            </div>
+        </form>
+        <div class="row text-center">
+            <div class="col-12">
+                <hr/>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group col-12">
+                    <label>Last Login </label>
+                    {% if admin_user.current_login_at %}
+                        {% set ll_date, ll_time = admin_user.current_login_at|split_datetime %}
+                        <p class="form-control-static">{{ ll_date|pretty_date }} {{ ll_time|pretty_time }}</p>
+                    {% else %}
+                        <p class="form-control-static">None</p>
+                    {% endif %}
+                </div>
+                <div class="form-group col-12">
+                    <label>Last Login IP </label>
+                    <p class="form-control-static">{{ admin_user.current_login_ip }}</p>
+                </div>
+                <div class="form-group col-12">
+                    <label>Login Count </label>
+                    <p class="form-control-static">{{ admin_user.login_count }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group col-12">
+                    <label>Created </label>
+                    <p class="form-control-static">{{ create_date|pretty_date }} {{ create_time|pretty_time }}</p>
+                </div>
+                <div class="form-group col-12 d-flex flex-column justify-content-center">
+                    <label>Roles </label>
+                    <div class="container-fluid">
+                        {% for role in roles %}
+                            {% set checked = '' %}
+                            {% if role in admin_user.roles %}
+                                {% set checked = ' checked' %}
+                            {% endif %}
+                            <div class="checkbox">
+                                <label>
+                                    <input class="role-selection-{{ id }}" type="checkbox"
+                                           value="{{ role.name }}"{{ checked }}> {{ role.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>

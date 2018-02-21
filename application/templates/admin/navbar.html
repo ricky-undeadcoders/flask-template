@@ -1,0 +1,65 @@
+{% if current_user.is_authenticated and current_user.has_role('admin') %}
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('admin.dashboard') }}">UCS Admin</a>
+        <div class="collapse navbar-collapse" id="navbarAdmin">
+            <ul class="nav navbar-nav mr-auto text-right text-lg-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{{ url_for('admin.users') }}" id="dropdown_users"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User Management</a>
+                    <div class="dropdown-menu text-right text-lg-left" aria-labelledby="dropdown_users">
+                        <a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a>
+                        <a class="dropdown-item" href="{{ url_for('admin.roles') }}">Roles</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin.blog') }}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin.faq') }}">FAQ</a>
+                </li>
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link dropdown-toggle" href="{{ url_for('admin.content_home_page') }}" id="dropdown_content"#}
+{#                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Page Content</a>#}
+{#                    <div class="dropdown-menu" aria-labelledby="dropdown_content">#}
+{#                        <a class="dropdown-item" href="{{ url_for('admin.content_home_page') }}">Home Page</a>#}
+{#                        <a class="dropdown-item" href="{{ url_for('admin.content_about_page') }}">About Page</a>#}
+{#                        <a class="dropdown-item" href="{{ url_for('admin.content_contact_page') }}">Contact Page</a>#}
+{#                    </div>#}
+{#                </li>#}
+            </ul>
+            <ul class="nav navbar-nav text-right text-lg-center">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{{ url_for('admin.user_settings') }}"
+                       id="dropdown-user"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle-o"
+                           aria-hidden="true"></i> {{ current_user.username or current_user.email }}</a>
+                    <div id="login-dp" class="dropdown-menu text-right text-lg-left dropdown-menu-right">
+                        {% if request.url_rule.endpoint != 'admin.user_settings' %}
+                            <a class="dropdown-item" href="{{ url_for('admin.user_settings') }}">User Settings</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ url_for('main.index') }}">Live Site</a>
+                        <a class="dropdown-item" href="{{ url_for('login.logout', next=url_for('admin.login')) }}">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> <b>Logout</b>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endif %}
+<div class="collapse navbar-collapse" id="navbarAdmin">
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.index') }}">UCS Live Site</a>
+        </li>
+    </ul>
+</div>

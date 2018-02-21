@@ -1,0 +1,44 @@
+<script type="text/javascript">
+
+    function submit_admin_user_data(admin_user_id) {
+        window.event.preventDefault();
+        $('#load_icon_1').show();
+
+        var user_div = $('#sub_data_admin_user_'.concat(admin_user_id));
+        var first_name = user_div.find('[name="first_name_input"]').val();
+        var last_name = user_div.find('[name="last_name_input"]').val();
+        var active = user_div.find('[name="active_input"]').val();
+        var email = user_div.find('[name="email_input"]').val();
+        var username = user_div.find('[name="username_input"]').val();
+        var bio = user_div.find('[name="bio_input"]').val();
+        $('#user_id').val(admin_user_id);
+        $('#first_name').val(first_name);
+        $('#last_name').val(last_name);
+        $('#active').val(active);
+        $('#email').val(email);
+        $('#username').val(username);
+        $('#bio').val(bio);
+        var roles = '';
+        $('#sub_data_admin_user_'.concat(admin_user_id).concat(' .role-selection-').concat(admin_user_id)).each(function () {
+            if ($(this).prop('checked')) {
+                roles += ($(this).val()).concat(',');
+            }
+        });
+        $('#roles').val(roles);
+        var submission_data = $('#admin_user_info').serializeArray();
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: "{{ url_for('admin.modify_admin_user')  }}",
+            success: function (data, status, request) {
+                $('#admin_user_'.concat(admin_user_id)).html(data['render_html']['admin_users_html']);
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data, status, request) {
+                alertError(data);
+                $('#load_icon_1').hide();
+            }
+        });
+    }
+</script>

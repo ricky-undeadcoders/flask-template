@@ -1,0 +1,13 @@
+/* Set content font-families */
+.ql-font-pt-sans {
+    font-family: "PT Sans";
+}
+
+.ql-font-pt-sans-narrow {
+    font-family: "PT Sans Narrow";
+}
+
+.ql-font-roboto {
+    font-family: "Roboto";
+}
+/* We do not set Sans Serif since it is the default font */

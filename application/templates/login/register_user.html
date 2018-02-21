@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block section_title %}
+    <div id="register_title" class="section">
+        <div class="justify-content-center col-12">
+            <h2 class="page-title text-center">Sign Up</h2>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div id="register_section" class="container-fluid justify-content-center section">
+        <form method="POST" action="{{ url_for('login.register') }}"
+              enctype="multipart/form-data">
+            {{ register_user_form.csrf_token }}
+            <div class="row">
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.email.label }}
+                    {{ register_user_form.email(class='form-control', placeholder='Enter Your Email') }}
+                </div>
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.username.label }}
+                    {{ register_user_form.username(class='form-control', placeholder='Enter Your Username') }}
+                </div>
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.first_name.label }}
+                    {{ register_user_form.first_name(class='form-control', placeholder='Enter Your First Name') }}
+                </div>
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.last_name.label }}
+                    {{ register_user_form.last_name(class='form-control', placeholder='Enter Your Last Name') }}
+                </div>
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.password.label }}
+                    {{ register_user_form.password(class='form-control', placeholder='Enter Your Password') }}
+                </div>
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.confirm_password.label }}
+                    {{ register_user_form.confirm_password(class='form-control', placeholder='Re-Enter Your Password') }}
+                </div>
+                <div class="form-group offset-sm-3 col-sm-6">
+                    {{ register_user_form.captcha.label }}
+                    {{ register_user_form.captcha(class='form-control') }}
+                </div>
+                <div class="form-group offset-md-5 col-md-2 pt-3">
+                    <button class="btn btn-primary col-sm-12" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

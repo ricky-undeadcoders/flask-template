@@ -1,0 +1,59 @@
+{% set html_form_name = '{}_form'.format(field_name) %}
+{% set image_form_name = '{}_image_form'.format(field_name) %}
+<div id="{{ html_form_name }}_successes" class="success hidden"></div>
+<div id="image_id_errors" class="error hidden"></div>
+<div id="image_errors" class="error hidden"></div>
+<div id="field_name_errors" class="error hidden"></div>
+<div id="quill_text_errors" class="error hidden"></div>
+<form id="{{ html_form_name }}" class="quill-form">
+    {{ quill_html_form.csrf_token }}
+    <div id="quill_row" class="row justify-content-center">
+        <div class="form-group text-center col-lg-10">
+            <!-- Quill editor container -->
+            <div id="quill_container" class="container">
+                {% include 'quill_toolbar.html' %}
+                <div id="{{ html_form_name }}_editor" class="editor-parent"></div>
+            </div>
+            <!-- /Quill editor container -->
+        </div>
+    </div>
+    {{ quill_html_form.quill_text() }}
+    {{ quill_html_form.field_name(value=field_name) }}
+    <div class="row justify-content-center">
+        <div class="form-group text-center col-sm-10 col-md-8 col-lg-6">
+            <button class="btn btn-primary" onclick="upload_quill_html_and_images('{{ html_form_name }}_editor .ql-editor')">Submit</button>
+        </div>
+    </div>
+</form>
+
+<form id="{{ image_form_name }}" class="hidden quill-form-images">
+    {{ quill_image_form.csrf_token }}
+    {{ quill_image_form.image_id }}
+    {{ quill_image_form.image }}
+    {{ quill_image_form.field_name(value=field_name) }}
+</form>
+
+<!-- Initialize editor -->
+<script>
+    // Add fonts to whitelist
+    var Font = Quill.import('formats/font');
+    // We do not add Sans Serif since it is the default
+    Font.whitelist = ['pt-sans', 'pt-sans-narrow', 'roboto'];
+    Quill.register(Font, true);
+
+    var quill = new Quill('#{{ html_form_name }}_editor', {
+        modules: {
+            toolbar: '#{{ html_form_name }}_toolbar_container'
+        },
+        theme: 'snow'
+    });
+
+    quill.on('selection-change', function(range) {
+        updateFormSubmit();
+    });
+    quill.on('text-change', function(delta, source) {
+        updateFormSubmit();
+    });
+
+    $('#{{ html_form_name }}_editor .ql-editor').html('{{ g.datastore.find_site_text(field_name=field_name)[1].value|safe|remove_whitespace }}');
+</script>

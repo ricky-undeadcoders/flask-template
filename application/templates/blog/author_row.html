@@ -1,0 +1,17 @@
+<div class="row">
+    {% set id = author.id %}
+    {% set name = '{} {}'.format(author.first_name, author.last_name) %}
+    <div id="author_{{ id }}" class="col-12 tile-row">
+        <h2><a href="{{ url_for('blog.author_details', user_id=id) }}">{{ name }}</a></h2>
+        <div class="author-info mb-4">
+
+        </div>
+{#        {% if post_index == 1 %}#}
+{#        {% set truncate_length = 1200 %}#}
+{#        {% else %}#}
+{#            {% set truncate_length = 250 %}#}
+{#        {% endif %}#}
+        {{ author.bio.text|safe }}
+{#        <small><a href="{{ url_for('blog.author_details', user_id=id) }}"></a></small>#}
+    </div>
+</div>

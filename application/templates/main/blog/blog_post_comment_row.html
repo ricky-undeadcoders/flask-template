@@ -1,0 +1,13 @@
+{% set comment_id = comment.id %}
+{% set comment_date, comment_time = comment.create_date|split_datetime %}
+{% set pretty_comment_date = comment_date|pretty_date %}
+{% set pretty_comment_time = comment_time|pretty_time %}
+{% set comment_author = comment.author %}
+<div id="comment_{{ id }}" class="col-12 blog-post-comment-row">
+    <div class="comment-info mb-4 mt-3">
+        by <a href="#"><i><strong>{{ comment_author }}</strong></i></a>
+        <br>
+        <b>{{ pretty_comment_date }}</b> - {{ pretty_comment_time }}
+    </div>
+    {{ comment.body|safe }}
+</div>

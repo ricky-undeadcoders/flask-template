@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% import 'macros/pagination.html' as mac_p with context %}
+
+{% block title %}Blog{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column h-100 justify-content-between">
+        <div>
+            <div id="blog_title" class="section mb-5">
+                <div class="justify-content-center col-12">
+                    <h1 class="page-title text-center">Blog</h1>
+                    <div class="row justify-content-center">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="{{ url_for('main.index') }}">Home</a>
+                            <span class="breadcrumb-item active">Blog</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="blog_section" class="container">
+                <div class="row">
+                    <div class="col-12">
+                        {% for post in g.datastore.find_all_posts(order_by='-create_date', active=True) %}
+                            {% set post_index = loop.index %}
+                            {% include 'blog/blog_post_row.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{#        <div id="pagination_section" class="section mt-5">#}
+{#            <div class="row justify-content-center">#}
+{#                {{ mac_p.render_post_pagination(post_pagination, 'blog.blog') }}#}
+{#            </div>#}
+{#        </div>#}
+    </div>
+{% endblock %}

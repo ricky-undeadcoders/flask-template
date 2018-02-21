@@ -1,0 +1,129 @@
+.hidden {
+    display: none;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    background: #b1b1b1;
+    /*background: -webkit-radial-gradient(ellipse 90% 50%, white, #d2d2d2, #bebebe 110%); !* Safari 5.1 to 6.0 *!*/
+    /*background: -o-radial-gradient(ellipse 90% 50%, white, #d2d2d2, #bebebe 110%); !* For Opera 11.6 to 12.0 *!*/
+    /*background: -moz-radial-gradient(ellipse 90% 50%, white, #d2d2d2, #bebebe 110%); !* For Firefox 3.6 to 15 *!*/
+    /*background: radial-gradient(ellipse 90% 50%, white, #d2d2d2, #bebebe 110%); !* Standard syntax *!*/
+    background: -webkit-radial-gradient(ellipse 90% 50%, white, #b1b1b1, #909090 110%); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(ellipse 90% 50%, white, #b1b1b1, #909090 110%); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(ellipse 90% 50%, white, #b1b1b1, #909090 110%); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(ellipse 90% 50%, white, #b1b1b1, #909090 110%); /* Standard syntax */
+}
+
+/* fixed and fluid only on sm and up */
+@media (min-width: 576px) {
+    .fixed {
+        flex: 0 0 200px;
+        min-height: 100vh;
+    }
+    .col .fluid {
+       min-height: 100vh;
+    }
+}
+
+.vh-100 {
+    min-height: 100vh;
+}
+
+.flex-grow {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+}
+
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    justify-content: space-between;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding-bottom: 65px;
+}
+
+.section {
+    width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.pagination .page-link {
+    color: black;
+    background-color: white;
+}
+
+.breadcrumb {
+    padding: .3rem .5rem;
+    margin-bottom: 0;
+    background-color: transparent;
+    border: 0px solid;
+    border-radius: 0px;
+    font-size: .8rem;
+}
+
+.breadcrumb-item.active {
+    color: black;
+}
+
+@media (max-width: 320px) {
+    .hyphenate {
+        max-width: 260px;
+    }
+}
+
+.hyphenate {
+    /* Careful, this breaks the word wherever it is without a hyphen */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    /* Adds a hyphen where the word breaks */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+/*.word-wrap {*/
+    /*word-wrap: break-word;      !* IE 5.5-7 *!*/
+    /*white-space: -moz-pre-wrap; !* Firefox 1.0-2.0 *!*/
+    /*white-space: pre-wrap;      !* current browsers *!*/
+    /*overflow: hidden;*/
+/*}*/
+
+/*-- Quill editor alignment display --*/
+.ql-align-right {
+    text-align: right;
+}
+
+.ql-align-left {
+    text-align: left;
+}
+
+.ql-align-justify {
+    text-align: justify;
+}
+
+.ql-align-center {
+    text-align: center;
+}
+.draft-warning {
+    padding-top: 150px;
+    font-size: 150%;
+    color: red;
+}
+/*-- /Quill editor alignment display --*/

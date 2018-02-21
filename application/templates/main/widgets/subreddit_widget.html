@@ -1,0 +1,34 @@
+{% set subreddit_dict = subreddit_dict[subreddit][i] %}
+<div class="row">
+    <div id="reddit_programmerhumor_widget" class="widget col-12">
+        <div class="row">
+            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                <span><small><a href="https://www.reddit.com/r/{{ subreddit }}/" target="_blank">/r/{{ subreddit }}</a> subreddit</small></span>
+                {% if i==0 %}
+                    <span><small>Top Post</small></span>
+                {% else %}
+                    <span><small>Post</small></span>
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ subreddit_dict["url"] }}"
+                   target="_blank">{{ subreddit_dict["title"]|safe }}</a>
+            </div>
+            <div class="col-12 mt-2 text-center">
+                <a href="{{ subreddit_dict["url"] }}"
+                   target="_blank"><img src="{{ subreddit_dict["preview_src"] }}"
+                                        onerror="this.src='{{ url_for("static", filename="images/default_reddit_thumbnail.jpg") }}'; this.className='img preview-thumbnail default-thumbnail';"
+                                        class="img preview-thumbnail" alt="Subreddit Preview"></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-inline-flex justify-content-end align-items-center mt-1">
+                <span><small><a href="{{ subreddit_dict["perma_link"] }}"
+                                target="_blank"><u>comments</u></a></small></span>
+            </div>
+        </div>
+    </div>
+</div>

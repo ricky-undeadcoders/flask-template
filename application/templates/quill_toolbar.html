@@ -1,0 +1,58 @@
+<script>
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline'],                  // toggled buttons
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+        [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+        [{'align': []}, {'color': []}, 'clean'],          // color dropdown with defaults from theme + remove formatting button
+        ['link', 'image', 'video'],
+        [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+        [{'header': [1, 2, 3, 4, false]}],
+        [{'font': []}]
+    ];
+</script>
+
+<div id="toolbar_container">
+    <span class="ql-formats">
+        <select class="ql-font">
+            <option selected>Sans Serif</option>
+            <option value="pt-sans">PT Sans</option>
+            <option value="pt-sans-narrow">PT Sans Narrow</option>
+            <option value="roboto">Roboto</option>
+        </select>
+        <select class="ql-size"></select>
+        <select class="ql-header"></select>
+    </span>
+    <span class="ql-formats">
+        <button class="ql-bold"></button>
+        <button class="ql-italic"></button>
+        <button class="ql-underline"></button>
+        <button class="ql-strike"></button>
+    </span>
+    <span class="ql-formats">
+        <button class="ql-script" value="sub"></button>
+        <button class="ql-script" value="super"></button>
+    </span>
+    <span class="ql-formats">
+        <select class="ql-color"></select>
+        <select class="ql-background"></select>
+    </span>
+    <span class="ql-formats">
+        <select class="ql-align"></select>
+        <button class="ql-direction" value="rtl"></button>
+    </span>
+    <span class="ql-formats">
+        <button class="ql-indent" value="-1"></button>
+        <button class="ql-indent" value="+1"></button>
+        <button class="ql-list" value="ordered"></button>
+        <button class="ql-list" value="bullet"></button>
+    </span>
+    <span class="ql-formats">
+        <button class="ql-blockquote"></button>
+        <button class="ql-code-block"></button>
+        <button class="ql-link"></button>
+    </span>
+    <span class="ql-formats">
+        <button class="ql-clean"></button>
+    </span>
+</div>

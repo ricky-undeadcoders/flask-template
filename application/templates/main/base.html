@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} | Undead Coder Society</title>
+
+    <!-- favicon -->
+    <link href="{{ url_for('static', filename='icons/favicon.ico') }}" rel="icon" type="image/x-icon"/>
+    <!-- /favicon  -->
+
+    <!-- fonts -->
+    {% include 'fonts.html' %}
+    <!-- /fonts -->
+
+    <!-- head imports -->
+    {% include "main/imports_head.html" %}
+    <!-- /head imports -->
+
+    <!-- page-specific styles -->
+    {% block page_styles %}{% endblock %}
+    <!-- /page-specific styles -->
+
+</head>
+<body>
+<div class="container-fluid h-100 vh-100">
+    <div class="row h-100 vh-100">
+        <div class="col fluid d-flex flex-column">
+            <!-- navbar -->
+            {% include 'main/navbar_top.html' %}
+            <!-- /navbar -->
+
+            <!-- error/success modals -->
+            <ul id="success_field" class="success"></ul>
+            <ul id="error_field" class="error"></ul>
+            <!-- /error/success modals -->
+
+            <div class="flex-grow">
+                <!-- body -->
+                {% block body %}{% endblock %}
+                <!-- /body -->
+            </div>
+
+            <!-- alerts -->
+            {% include 'alerts.html' %}
+            {% include 'alerts_js.html' %}
+            <!-- /alerts -->
+
+            <!-- footer -->
+            {% include 'main/footer.html' %}
+            <!-- /footer -->
+        </div>
+    </div>
+</div>
+
+<!-- body imports -->
+{% include "main/imports_body.html" %}
+<!-- /body imports -->
+
+<!-- page-specific scripts -->
+{% block page_scripts %}{% endblock %}
+<!-- /page-specific scripts -->
+
+<!-- google analytics files -->
+{% include "main/google_analytics.html" %}
+<!-- /google analytics files -->
+
+<!-- js for error modals -->
+<script>
+    $(document).ready(function () {
+        {% include "flashed_messages_js.html" %}
+    });
+</script>
+<!-- /js for error modals -->
+
+</body>
+</html>

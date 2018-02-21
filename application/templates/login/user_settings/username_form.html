@@ -1,0 +1,22 @@
+<h2 class="section_title">Change Username</h2>
+<hr/>
+<form id="user_settings_change_username_form" action="{{ url_for('login.user_settings_change_username') }}">
+    {{ username_form.csrf_token }}
+    <div class="row">
+        <ul id="user_settings_change_username_form_successes" class="hidden success"></ul>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <ul id="username_errors" class="hidden error"></ul>
+            {{ username_form.username.label }}
+            {{ username_form.username(size=20, class='form-control', placeholder='Enter User Name', value=current_user.username, required='') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-3 col-md-2">
+            <button class="btn btn-primary col-sm-12"
+                    onclick="modify_user_settings($('#user_settings_change_username_form'));">Go
+            </button>
+        </div>
+    </div>
+</form>

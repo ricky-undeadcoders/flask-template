@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    function submit_user_data(user_id) {
+        window.event.preventDefault();
+        $('#load_icon_1').show();
+
+        var user_div = $('#sub_data_user_'.concat(user_id));
+        var first_name = user_div.find('[name="first_name_input"]').val();
+        var last_name = user_div.find('[name="last_name_input"]').val();
+        var active = user_div.find('[name="active_input"]').val();
+        var email = user_div.find('[name="email_input"]').val();
+        var username = user_div.find('[name="username_input"]').val();
+        var roles = '';
+        $('.role-selection-'.concat(user_id)).each(function () {
+            if ($(this).prop('checked')) {
+                roles += ($(this).val()).concat(',');
+            }
+        });
+        $('#user_id').val(user_id);
+        $('#first_name').val(first_name);
+        $('#last_name').val(last_name);
+        $('#active').val(active);
+        $('#email').val(email);
+        $('#username').val(username);
+        $('#roles').val(roles);
+        var submission_data = $('#user_info').serializeArray();
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: "{{ url_for('admin.modify_user')  }}",
+            success: function (data, status, request) {
+                $('#user_'.concat(user_id)).html(data['render_html']['user_html']);
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data, status, request) {
+                alertError(data);
+                $('#load_icon_1').hide();
+            }
+        });
+    }
+</script>

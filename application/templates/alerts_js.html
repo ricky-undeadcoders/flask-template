@@ -1,0 +1,136 @@
+<script>
+    $(document).ready(function () {
+        {#        $('.alert').each(function() {#}
+        {#            if ($(this).has('ul').length) {#}
+        {#                $(this).show();#}
+        {#                var alert_container = $(this).closest('.alert-container');#}
+        {#                alert_container.addClass('displayed');#}
+        {#                if ($(this).hasClass('alert-success')) {#}
+        {#                    alert_container.fadeOut('2000', function () {#}
+        {#                        alert_container.removeClass('displayed');#}
+        {#                    })#}
+        {#                }#}
+        {#            }#}
+        {#        });#}
+        $('.alert-close').click(function () {
+            $(this).closest('.alert-container').removeClass('displayed');
+            $(this).closest('.alert').hide();
+        });
+    });
+
+    function alertSuccess(message_data) {
+        var success_field = $('#success_field');
+        var return_message = message_data['message'];
+        $('.alert').each(function () {
+            $(this).closest('.alert-container').removeClass('displayed');
+            $(this).hide();
+        });
+        success_field.html('');
+        success_field.append('<li>'.concat(return_message).concat('</li>'));
+        var success_message = success_field.detach();
+        var success_alert_box = $('.alert-success');
+        success_alert_box.append(success_message);
+
+        success_field.removeClass('hidden');
+        success_alert_box.closest('.alert-container').addClass('displayed');
+        success_alert_box.show();
+
+        success_alert_box.closest('.alert-container').delay({{ config['ERROR_MESSAGE_TTL'] }}).fadeOut('slow', function () {
+            success_alert_box.closest('.alert-container').removeClass('displayed');
+            success_alert_box.closest('.alert-container').show();
+        });
+    }
+
+    function alertError(message_data) {
+        var return_message = message_data['responseJSON']['message'][0];
+        var error_field = $('#error_field');
+        error_field.html('');
+        $('.alert').each(function () {
+            $(this).closest('.alert-container').removeClass('displayed');
+            $(this).hide();
+        });
+
+        var error_alert_box = $('.alert-danger');
+        if ($.type(return_message) == 'string') {
+            error_field.append('<li>'.concat(return_message).concat('</li>'));
+            var error_message = error_field.detach();
+            error_alert_box.append(error_message);
+            error_field.removeClass('hidden');
+        }
+        else {
+            for (var field_name in return_message) {
+                error_field.append('<li>' + field_name + ': '+ return_message[field_name] + '</li>');
+                var error_message = error_field.detach();
+                error_alert_box.append(error_message);
+                error_field.removeClass('hidden');
+            }
+        }
+        error_alert_box.closest('.alert-container').addClass('displayed');
+        error_alert_box.show();
+        error_alert_box.closest('.alert-container').delay({{ config['ERROR_MESSAGE_TTL'] }}).fadeOut('slow', function () {
+            error_alert_box.closest('.alert-container').removeClass('displayed');
+            error_alert_box.closest('.alert-container').show();
+        })
+    }
+
+    function alertSuccessPageReload(success_messages) {
+        var success_field = $('#success_field');
+        $('.alert').each(function () {
+            $(this).closest('.alert-container').removeClass('displayed');
+            $(this).hide();
+        });
+
+        var success_alert_box = $('.alert-success');
+        success_field.html('');
+        if ($.type(success_messages[0]) == 'string') {
+            success_field.append('<li>'.concat(success_messages[0]).concat('</li>'));
+            var success_message = success_field.detach();
+            success_alert_box.append(success_message);
+        }
+        else {
+            for (var field_name in success_messages[0]) {
+                success_field.append('<li>'.concat(success_messages[0][field_name]).concat('</li>'));
+                var success_message = success_field.detach();
+                success_alert_box.append(success_message);
+                success_field.removeClass('hidden');
+            }
+        }
+        success_field.removeClass('hidden');
+        success_alert_box.closest('.alert-container').addClass('displayed');
+        success_alert_box.show();
+
+        success_alert_box.closest('.alert-container').delay({{ config['ERROR_MESSAGE_TTL'] }}).fadeOut('slow', function () {
+            success_alert_box.closest('.alert-container').removeClass('displayed');
+            success_alert_box.closest('.alert-container').show();
+        });
+    }
+
+    function alertErrorPageReload(error_messages) {
+        var error_field = $('#error_field');
+        error_field.html('');
+        $('.alert').each(function () {
+            $(this).closest('.alert-container').removeClass('displayed');
+            $(this).hide();
+        });
+        var error_alert_box = $('.alert-danger');
+        if ($.type(error_messages[0]) == 'string') {
+            error_field.append('<li>'.concat(error_messages[0]).concat('</li>'));
+            var error_message = error_field.detach();
+            error_alert_box.append(error_message);
+        }
+        else {
+            for (var field_name in error_messages[0]) {
+                error_field.append('<li>'.concat(field_name).concat(': ').concat(error_messages[0][field_name]).concat('</li>'));
+                var error_message = error_field.detach();
+                error_alert_box.append(error_message);
+            }
+        }
+        error_field.removeClass('hidden');
+        error_alert_box.closest('.alert-container').addClass('displayed');
+        error_alert_box.show();
+        error_alert_box.closest('.alert-container').delay({{ config['ERROR_MESSAGE_TTL'] }}).fadeOut('slow', function () {
+            error_alert_box.closest('.alert-container').removeClass('displayed');
+            error_alert_box.closest('.alert-container').show();
+        })
+    }
+</script>

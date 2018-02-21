@@ -1,0 +1,41 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">Content</h2>
+
+    {#-- about us section --#}
+    {% with field_name = 'about_page_body' %}
+        <div id="{{ field_name }}_section" class="container">
+            <h2 class="section_title">About
+                <a class="btn btn-outline-info btn-sm float-sm-right" role="button"
+                   href="{{ url_for('main.draft_about') }}" target="_blank">
+                    <i class="fa fa-eye"></i> View Draft</a>
+            </h2>
+
+            <hr/>
+
+            {% include "admin/content/content_quill_form.html" %}
+            {% include "admin/content/content_publish_form.html" %}
+            {% include "admin/content/content_quill_js.html" %}
+            {% include "admin/content/content_publish_js.html" %}
+
+            <div class="row justify-content-center">
+                <div class="form-group text-center col-sm-10 col-md-8 col-lg-6">
+                    <button class="btn btn-primary"
+                            onclick="upload_content_html_and_images('{{ field_name }}_form_editor .ql-editor')">Draft
+                    </button>
+                    <button class="btn btn-secondary"
+                            onclick="publish_content()">Publish
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+    {#-- /about us section --#}
+{% endblock %}

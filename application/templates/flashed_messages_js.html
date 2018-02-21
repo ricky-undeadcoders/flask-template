@@ -1,0 +1,17 @@
+{% set error_messages = get_flashed_messages(category_filter='error') %}
+{% if error_messages %}
+    alertErrorPageReload($.parseJSON('{{ error_messages|jsonify|safe }}'));
+{% endif %}
+{% set success_messages = get_flashed_messages(category_filter='success') %}
+{% if success_messages %}
+    alertSuccessPageReload($.parseJSON('{{ success_messages|jsonify|safe }}'));
+{% endif %}
+{% set info_messages = get_flashed_messages(category_filter='info') %}
+{% if info_messages %}
+    {% for message in info_messages %}
+        {% if message != '' %}
+            $('#info_modal_messages').append('<li>' + '{{ message }}' + '</li>');
+            $('#infoModal').modal('show');
+        {% endif %}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,19 @@
+.validation-icon {
+    color: red;
+    font-size: 16px;
+    font-weight: 400;
+    text-shadow: 0 0.1rem 0.5rem rgb(0, 0, 0);
+}
+
+.validation-icon {
+    position: absolute;
+}
+
+.validation-icon-generic {
+    left: -0.6em;
+    bottom: 0.5em;
+}
+
+.val-icon-tooltip {
+    -webkit-appearance: none !important;
+}

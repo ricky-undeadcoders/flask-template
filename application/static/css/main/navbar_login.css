@@ -1,0 +1,19 @@
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 14px;
+    overflow:hidden;
+    /*background-color: #AFAFAF;*/
+}
+#login-dp .help-block {
+    font-size: 14px;
+}
+
+#login-dp.logged-out .bottom{
+    border-top:1px solid black;
+    clear: both;
+    padding-top:14px;
+}
+
+#login-dp.logged-out .form-group {
+    margin-bottom: 15px;
+}

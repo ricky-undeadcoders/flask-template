@@ -1,0 +1,27 @@
+body {
+  font-family: 'Source Code Pro', monospace; }
+
+  #navbar_brand {
+    font-size: 30pt;
+    font-family: 'VT323', monospace;
+    color: #2f2f2f;
+    text-shadow: 1px 1px 0px #222, 1.5px 1.5px 0px #161616, 2px 2px 0px #090909,
+        2.5px 2.5px 0px black, 4px 6px 10px #001c5a; }
+
+    #home_title {
+      font-size: 36pt;
+      font-family: 'VT323', monospace;
+      color: #2f2f2f;
+      text-shadow: 1px 1px 0px #222, 1.5px 1.5px 0px #161616, 2px 2px 0px #090909,
+            2.5px 2.5px 0px black, 4px 6px 10px #001c5a; }
+
+      h1.page-title {
+        font-size: 30pt;
+        font-family: 'VT323', monospace;
+        color: #2f2f2f;
+        text-shadow: 1px 1px 0px #222, 1.5px 1.5px 0px #161616, 2px 2px 0px #090909,
+                2.5px 2.5px 0px black, 4px 6px 10px #001c5a; }
+
+        .typewriter {
+          font-family: 'VT323', monospace;
+          color: #2f2f2f; }

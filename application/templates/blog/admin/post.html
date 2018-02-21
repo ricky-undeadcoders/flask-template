@@ -1,0 +1,86 @@
+{% extends 'admin/base.html' %}
+{% block title %}Edit Post{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}
+
+    <script type="text/javascript">
+        function upload_quill_html() {
+            var form = $('#quill_form');
+            $('#load_icon_1').show();
+            window.event.preventDefault();
+            $('.error').each(function () {
+                $(this).empty();
+                $(this).addClass('hidden');
+            });
+            $('.success').each(function () {
+                $(this).addClass('hidden');
+                $(this).empty();
+            });
+            $('#error_modal_messages').empty();
+
+            $('#quill_text').val($('#editor .ql-editor').html());
+            var submission_data = form.serializeArray();
+            $.ajax({
+                type: 'POST',
+                data: submission_data,
+                url: "{{ url_for('admin.modify_post')  }}",
+                success: function (data, status, request) {
+                    alertSuccess(data);
+                    $('#load_icon_1').hide();
+                },
+                error: function (data, status, request) {
+                    alertError(data);
+                    $('#load_icon_1').hide();
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h2 class="text-center page-title">{{ post.title }}</h2>
+    <form id="quill_form" class="quill-form">
+        {{ post_form.csrf_token }}
+        <input name="post_id" value="{{ post.id }}" class="hidden"/>
+        <input name="body" id="quill_text" class="hidden"/>
+        <div id="quill_row" class="row justify-content-center">
+            <div class="form-group text-center col-lg-10">
+                <!-- Quill editor container -->
+                <div id="quill_container" class="container">
+                    {% include "quill_toolbar.html" %}
+                    <div id="editor" class="editor-parent">{{ post.body|safe }}</div>
+                    <button class="btn btn-secondary float-right mt-2" onclick="upload_quill_html()">Update
+                    </button>
+
+                </div>
+                <!-- /Quill editor container -->
+            </div>
+        </div>
+    </form>
+
+    <script>
+        // Add fonts to whitelist
+        var Font = Quill.import('formats/font');
+        // We do not add Sans Serif since it is the default
+        Font.whitelist = ['pt-sans', 'pt-sans-narrow', 'roboto'];
+        Quill.register(Font, true);
+
+        var quill = new Quill('#editor', {
+            modules: {
+                toolbar: '#toolbar_container'
+            },
+            theme: 'snow'
+        });
+
+        quill.on('selection-change', function (range) {
+            updateFormSubmit();
+        });
+        quill.on('text-change', function (delta, source) {
+            updateFormSubmit();
+        });
+
+    </script>
+
+{% endblock %}

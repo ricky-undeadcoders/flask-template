@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    function submit_role_data(role_id) {
+        window.event.preventDefault();
+        $('#load_icon_1').show();
+
+        var role_div = $('#sub_data_role_'.concat(role_id));
+        var name = role_div.find('[name="name_input"]').val();
+        var description = role_div.find('[name="description_input"]').val();
+        var active = role_div.find('[name="active_input"]').val();
+        $('#role_id').val(role_id);
+        $('#name').val(name);
+        $('#description').val(description);
+        $('#active').val(active);
+        var submission_data = $('#role_info').serializeArray();
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: "{{ url_for('admin.modify_role')  }}",
+            success: function (data, status, request) {
+                $('#role_'.concat(role_id)).html(data['render_html']['role_html']);
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data, status, request) {
+                alertError(data);
+                $('#load_icon_1').hide();
+            }
+        });
+    }
+</script>

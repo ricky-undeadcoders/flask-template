@@ -1,0 +1,12 @@
+.bg-faded {
+    background-color: transparent;
+}
+
+.navbar-toggler-right {
+    top: 1.2rem;
+}
+
+.navbar-nav .nav-item .nav-link {
+    margin-left: .75rem;
+    margin-right: .75rem;
+}

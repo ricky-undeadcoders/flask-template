@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Authors{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column h-100 justify-content-between">
+        <div>
+            <div id="authors_title" class="section mb-5">
+                <div class="justify-content-center col-12">
+                    <h1 class="page-title text-center">Authors</h1>
+                    <div class="row justify-content-center">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="{{ url_for('main.index') }}">Home</a>
+                            <a class="breadcrumb-item" href="{{ url_for('blog.blog') }}">Blog</a>
+                            <span class="breadcrumb-item active">Authors</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="authors_section" class="container">
+                <div class="row">
+                    <div class="col-12">
+                        {% for author in g.datastore.find_all_users() %}
+                            {% include 'blog/author_row.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

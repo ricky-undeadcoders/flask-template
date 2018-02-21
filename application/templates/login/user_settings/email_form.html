@@ -1,0 +1,19 @@
+<h2 class="section_title">Change Email</h2>
+<hr/>
+<form id="modify_and_confirm_email_form" action="{{ url_for('login.modify_and_confirm_email') }}">
+    {{ email_form.csrf_token }}
+    <div class="row">
+        <div class="form-group col-md-6">
+            <ul id="email_errors" class="hidden error"></ul>
+            {{ email_form.email.label }}
+            {{ email_form.email(size=20, class='form-control', placeholder='Enter Email', value=current_user.email, required='') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-3 col-md-2">
+            <button class="btn btn-primary col-sm-12"
+                    onclick="modify_user_settings($('#modify_and_confirm_email_form'));">Go
+            </button>
+        </div>
+    </div>
+</form>

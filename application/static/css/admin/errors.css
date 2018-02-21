@@ -1,0 +1,17 @@
+/*-- general error styling --*/
+input.error {
+    border-color: red;
+}
+
+label.error {
+    color: red;
+    font-size: 14px;
+    text-shadow: 0 0.1rem 0.1rem rgb(0, 0, 0);
+}
+
+.modal h4,
+.modal p {
+    color: black;
+    font-weight: 600;
+}
+/*-- /general error styling --*/

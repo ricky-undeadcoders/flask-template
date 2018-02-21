@@ -1,0 +1,30 @@
+<script type="text/javascript">
+
+    function modify_user_settings(form) {
+        window.event.preventDefault();
+        $('.error').each(function () {
+            $(this).empty();
+            $(this).addClass('hidden');
+        });
+        $('.success').each(function () {
+            $(this).addClass('hidden');
+            $(this).empty();
+        });
+        $('#error_modal_messages').empty();
+        var submission_data = form.serializeArray();
+        $('#load_icon_1').show();
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: form.attr('action'),
+            success: function (data, status, request) {
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data) {
+                alertError(data);
+                $('#load_icon_1').hide();
+            }
+        })
+    }
+</script>

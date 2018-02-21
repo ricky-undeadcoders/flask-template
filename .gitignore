@@ -1,0 +1,16 @@
+# file exts
+*.pyc
+*.json
+*.db
+
+# folders
+logs/*
+# tests/*
+# test/*
+test_page
+virtualenv/*
+.idea/*
+uploads
+
+# instance configuration
+#*/config/instance/*

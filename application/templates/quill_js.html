@@ -1,0 +1,79 @@
+{% set html_form_name = '{}_form'.format(field_name) %}
+{% set image_form_name = '{}_image_form'.format(field_name) %}
+<script type="text/javascript">
+    function upload_quill_html_and_images(quill_html_field_name) {
+{#        alert(quill_html_field_name)''#}
+        var quill_html = $('#'.concat(quill_html_field_name));
+        $('#load_icon_1').show();
+        window.event.preventDefault();
+        $('.error').each(function () {
+            $(this).empty();
+            $(this).addClass('hidden');
+        });
+        $('.success').each(function () {
+            $(this).addClass('hidden');
+            $(this).empty();
+        });
+        $('#error_modal_messages').empty();
+
+        quill_html.find('img').each(function () {
+            if ($(this).attr('src').substring(0, 4) == 'data') { //this means we have a new uploaded image
+                var img_gui = uuidv4();
+                var img_url = "{{ url_for('admin.quill_image', image_type=field_name, image_id='') }}".concat(img_gui).replace('//', '/');
+                var img_src = $(this).attr('src');
+                var img_b64 = img_src.substr(img_src.search('base64,') + 7);
+                $('#{{ image_form_name }}').find($('#image')).val(img_b64);
+                $('#{{ image_form_name }}').find($('#image_id')).val(img_gui);
+                var submission_data = $('#{{ image_form_name }}').serializeArray();
+                $.ajax({
+                    type: 'POST',
+                    data: submission_data,
+                    url: "{{ url_for('admin.upload_quill_image')  }}",
+                    success: function() {
+                        $(this).replaceWith('<img src="' + img_url + '">');
+                    },
+                    error: function (data) {
+                        if (data['responseJSON']['message_modal']) {
+                            $('#error_modal_messages').append('<li>'.concat(data['responseJSON']['message_modal']).concat('</li>'));
+                            $('#errorModal').modal('show');
+                        }
+                        else {
+                            var return_message = data['responseJSON']['message'][0];
+                            alertError(return_message);
+                        }
+                    }
+                });
+            }
+        });
+        $('#{{ html_form_name }}').find('#quill_text').val(quill_html.html());
+        $('#{{ html_form_name }}').find('#field_name').val('{{ field_name }}');
+{#        alert('{{ field_name }}');#}
+        var submission_data = $('#{{ html_form_name }}').serializeArray();
+
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: "{{ url_for('admin.upload_quill_html')  }}",
+            success: function (data, status, request) {
+                quill_html.html(data['render_html']['quill_html']);
+
+                serialized_forms = {};
+                serializeForms();
+                updateFormSubmit();
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data) {
+                if (data['responseJSON']['message_modal']) {
+                    $('#error_modal_messages').append('<li>'.concat(data['responseJSON']['message_modal']).concat('</li>'));
+                    $('#errorModal').modal('show');
+                }
+                else {
+                    alertError(data);
+                }
+                $('#load_icon_1').hide();
+            }
+        });
+
+    }
+</script>

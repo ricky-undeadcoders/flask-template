@@ -1,0 +1,16 @@
+<td>
+    <label for="bulk_ids"></label>
+    <input class="checkbox-item" id="bulk_ids" name="bulk_ids" type="checkbox" value="{{ post.id }}">
+</td>
+<td>{{ post.user.username }}</td>
+<td class="row_hide">{{ post.title }}</td>
+{% if post.active %}
+    <td>Active</td>
+{% else %}
+    <td>Inactive</td>
+{% endif %}
+<td class="text-center">
+    <span title="Expand" data-toggle="tooltip">
+        <i class="{{ chevron }}" aria-hidden="true"></i>
+    </span>
+</td>

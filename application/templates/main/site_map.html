@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Site Map{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div id="contact_title" class="section mb-5">
+        <div class="justify-content-center col-12">
+            <h1 class="page-title text-center">Site Map</h1>
+            <div class="row justify-content-center">
+                <nav class="breadcrumb">
+                    <a class="breadcrumb-item" href="{{ url_for('main.index') }}">Home</a>
+                    <span class="breadcrumb-item active">Site Map</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="contact_section" class="container px-2 px-sm-3">
+        <div class="justify-content-center text-center row">
+            <div class="col-12 tile-row pt-5 pb-4 px-1 px-md-4">
+                {% for name, url_rule in view_functions %}
+                    <div><a href="{{ url_rule }}">{{ name }}</a></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

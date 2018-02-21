@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+{% import 'macros/pagination.html' as mac_p with context %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block page_styles %}
+    <link href="{{ url_for('static', filename='css/main/home_page.css') }}" rel="stylesheet" type="text/css"
+          media="all"/>
+{% endblock %}
+
+{% block page_scripts %}
+    <script>var skeleton_src = "{{ url_for('static', filename='images/skeleton-head.png') }}";</script>
+    <script src="{{ url_for('static', filename='js/custom/skeleton.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main/home_page.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div id="homepage_img_section" class="container">
+        <div id="homepage_img_div" class="justify-content-center text-center">
+        </div>
+    </div>
+    <div id="title_section" class="container section">
+        <div class="justify-content-center text-center col-12">
+            <h1 id="home_title">{{ g.datastore.find_content('home_page_title', draft=draft).text|safe }}</h1>
+        </div>
+    </div>
+    <div id="learn_more_section" class="container-fluid section">
+        <div class="justify-content-center text-center">
+            <div class="typewriter-parent">
+                <div class="typewriter hidden-sm-down">
+                    <h6>
+                        <a href="javascript:void(0);" onclick="showBlogPostsOnly();">Blog Posts</a>
+                        &nbsp;|&nbsp;
+                        <a href="javascript:void(0);" onclick="showAllPosts();">All Posts</a>
+                        &nbsp;|&nbsp;
+                        <a href="javascript:void(0);" onclick="showTechPostsOnly();">Tech Posts</a>
+                    </h6>
+                </div>
+                <div class="typewriter hidden-md-up">
+                    <h6><a href="javascript:void(0);" onclick="showBlogPostsOnly();">Blog Posts</a></h6>
+                    &nbsp;-----&nbsp;
+                    <h6><a href="javascript:void(0);" onclick="showTechPostsOnly();">Tech Posts</a></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="widget_section" class="container-fluid">
+        <div class="row">
+            <div id="welcome_wiget_column" class="widget-column col-12">
+                <div class="offset-lg-2 offset-md-2 col-lg-8 col-md-8">
+                    {% include 'main/widgets/welcome_widget.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="first_widget_column" class="widget-column col-md-7 col-lg-8">
+                <div class="col-12">
+                    {% for post in g.datastore.find_all_posts(order_by='-create_date', active=True)[:5] %}
+                        {% set post_index = loop.index %}
+                        {% include 'main/widgets/blog_widget.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="second_widget_column" class="widget-column col-md-5 col-lg-4">
+                <div class="col-12">
+                    {% for i in range(config.get('MAX_REDDIT_POSTS', 1)) %}
+                        {% for subreddit in config.get('SUBREDDIT_LIST', []) %}
+                            {% include 'main/widgets/subreddit_widget.html' %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if draft %}
+        <b class="justify-content-center text-center draft-warning">THIS IS A DRAFT</b>
+    {% endif %}
+{% endblock %}

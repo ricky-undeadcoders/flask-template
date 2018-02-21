@@ -1,0 +1,11 @@
+#remember {
+    vertical-align: middle;
+}
+
+#remember_label {
+    vertical-align: -webkit-baseline-middle;
+}
+
+#login_admin_user_form label {
+    display: inline-block;
+}

@@ -1,0 +1,65 @@
+{% set id = post.id %}
+{% set create_date, create_time = post.create_date|split_datetime %}
+<td colspan="5">
+    <div class="col-12">
+        <hr/>
+    </div>
+    <div class="details_parent_div" style="display: none;">
+        <form id="blog_post_form_{{ id }}" class="blog-post-form">
+            {{ modify_post_form.csrf_token }}
+            <input class="hidden" name="post_id" value="{{ id }}"/>
+            <div class="row">
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>Author </label>
+                    <input class="form-control" type="text" value="{{ post.user.username }}" disabled/>
+                    <input class="hidden" name="user_id" value="{{ post.user.id }}"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-4">
+                    <label>Title</label>
+                    <input class="form-control" name="title" type="text" value="{{ post.title|safe }}"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-2">
+                    <label>Status </label><br>
+                    {% if post.active == True %}
+                        <div class="btn-group status_group row-item-active">
+                            <a class="btn btn-secondary disabled status-icon" href="">
+                                <i class="fa fa-check-circle-o" title="Active"></i>
+                            </a>
+                            <a class="btn btn-secondary status-btn deactivate-row-item-btn">
+                                <i class="fa fa-toggle-on" title="Deactivate"></i>
+                            </a>
+                            <input hidden="hidden" name="active" value="on">
+                        </div>
+                    {% else %}
+                        <div class="btn-group status_group row-item-inactive">
+                            <a class="btn btn-secondary disabled status-icon" href="">
+                                <i class="fa fa-times-circle-o" title="Inactive"></i>
+                            </a>
+                            <a class="btn btn-secondary status-btn activate-row-item-btn">
+                                <i class="fa fa-toggle-off" title="Activate"></i>
+                            </a>
+                            <input hidden="hidden" name="active" value="off">
+
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-6 col-lg-2">
+                    <input type="submit" class="btn btn-secondary float-right" value="Update" style="margin-top: 30px;"
+                           onclick="modify_post($('#blog_post_form_{{ id }}'));">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label>Body</label>
+                    <div title="Click to Edit" class="form-control" style="cursor: pointer;"
+                         onclick="$(location).attr('href', '{{ url_for('admin.post', post_id=id) }}');"
+                         onmouseenter="$(this).fadeTo('fast', 0.3);"
+                         onmouseleave="$(this).fadeTo('fast', 1.0)">
+                        {{ post.body|safe }}</div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</td>
+

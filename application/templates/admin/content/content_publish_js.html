@@ -1,0 +1,34 @@
+{% set content_publish_form_name = '{}_publish_form'.format(field_name) %}
+<script type="text/javascript">
+    function publish_content() {
+        $('#load_icon_1').show();
+        window.event.preventDefault();
+        $('.error').each(function () {
+            $(this).empty();
+            $(this).addClass('hidden');
+        });
+        $('.success').each(function () {
+            $(this).addClass('hidden');
+            $(this).empty();
+        });
+        $('#error_modal_messages').empty();
+
+        var field_name = $('#{{ content_publish_form_name }}').find('#field_name').val();
+        var submission_data = $('#{{ content_publish_form_name }}').serializeArray();
+
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: "{{ url_for('admin.publish_content')  }}",
+            success: function (data, status, request) {
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data) {
+                alertError(data);
+                $('#load_icon_1').hide();
+            }
+        });
+
+    }
+</script>

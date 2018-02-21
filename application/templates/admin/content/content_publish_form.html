@@ -1,0 +1,5 @@
+{% set content_publish_form_name = '{}_publish_form'.format(field_name) %}
+<form id="{{ content_publish_form_name }}" class="hidden">
+    {{ content_publish_form.csrf_token }}
+    {{ content_publish_form.field_name(value=field_name) }}
+</form>

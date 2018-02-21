@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block page_styles %}
+    <link href="{{ url_for('static', filename='css/main/contact_page.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div id="contact_title" class="section mb-5">
+        <div class="justify-content-center col-12">
+            <h1 class="page-title text-center">Contact</h1>
+            <div class="row justify-content-center">
+                <nav class="breadcrumb">
+                    <a class="breadcrumb-item" href="{{ url_for('main.index') }}">Home</a>
+                    <span class="breadcrumb-item active">Contact</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div id="contact_section" class="container px-2 px-sm-3">
+        <div class="justify-content-center text-center row">
+            <div class="col-12 tile-row pt-5 pb-4 px-1 px-md-4">
+{#                <div class="">#}
+                    {% set contact_text = g.datastore.find_content(field_name='contact_page_body', draft=draft) %}
+                    {% if contact_text %}
+                        {{ contact_text.text|safe }}
+                    {% endif %}
+{#                </div>#}
+            </div>
+        </div>
+    </div>
+    {% if draft %}
+         <b class="justify-content-center text-center draft-warning">THIS IS A DRAFT</b>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "main/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block page_styles %}
+    <link href="{{ url_for('static', filename='css/security.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body%}
+    <h2 class="text-center login_title mb-5">UCS Login</h2>
+    <div class="container col-sm-10 col-md-5 col-lg-4 text-center">
+        <form id="login_user_form" method="post" action="{{ url_for('login.login') }}">
+            {{ login_user_form.csrf_token }}
+            <div class="row">
+                <div class="form-group col-12">
+                    <ul id="username_errors" class="hidden error"></ul>
+                    {{ login_user_form.username.label(class='sr-only') }}
+                    {{ login_user_form.username(size=20, class='form-control', placeholder='Enter Email', tabindex='1', required='') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <ul id="password_errors" class="hidden error"></ul>
+                    {{ login_user_form.password.label(class='sr-only') }}
+                    {{ login_user_form.password(size=20, class='form-control', placeholder='Enter Password', tabindex='2', required='') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <button class="btn btn-lg btn-primary btn-block" tabindex="3" type="submit">Sign In</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 text-left">
+                    {{ login_user_form.remember(class='checkbox') }}
+                    {{ login_user_form.remember.label(id='remember_label') }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

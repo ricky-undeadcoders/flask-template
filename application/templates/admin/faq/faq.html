@@ -1,0 +1,90 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        function modify_faq(faq_form) {
+            window.event.preventDefault();
+            var submission_data = faq_form.serializeArray();
+            $('#load_icon_1').show();
+            $.ajax({
+                type: 'POST',
+                data: submission_data,
+                url: "{{ url_for('admin.modify_faq')  }}",
+                success: function (data, status, request) {
+                    alertSuccess(data);
+                    $('#load_icon_1').hide();
+                    var faq_id = faq_form.find('#faq_id').val();
+                    $('#faq_'.concat(faq_id)).html(data['render_html']['faq_html']);
+                },
+                error: function (data, status, request) {
+                    alertError(data);
+                    $('#load_icon_1').hide();
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    {#-- faq section --#}
+    {% with field_name = 'faq' %}
+        <div id="{{ field_name }}_section" class="container-fluid">
+            <h2 class="section_title">FAQ
+            </h2>
+            <hr/>
+            <div class="row float-right">
+                <div class="ml-3 ml-sm-0 mr-3 mb-2">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFAQModal">
+                        New FAQ
+                    </button>
+                </div>
+            </div>
+            <table id="table-users" class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th style="width:5%">Order</th>
+                    <th style="width:75%">Question</th>
+                    <th style="width:15%">Status</th>
+                    <th style="width:5%"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {# ---- question rows ---- #}
+                {# TODO: put disclaimer that all times are Central Time Zone #}
+                {% set all_faq = g.datastore.find_all_faq() %}
+                {% if all_faq|length > 0 %}
+                    {% for faq in all_faq %}
+                        {% set id = faq.id %}
+                        <tr id="faq_{{ id }}" class="row_item">
+                        {%  with chevron='fa fa-chevron-down' %}
+                            {% include "admin/faq/faq_list_collapse_row.html" %}
+                        {% endwith %}
+                        </tr>
+
+                        <tr id="sub_data_faq_{{ id }}" class="sub_data_parent" style="display: none;">
+                            {% include "admin/faq/faq_list_expand_row.html" %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">
+                            <p>There are no FAQs.</p>
+                        </td>
+                    </tr>
+                {% endif %}
+                {# ---- /question rows ---- #}
+                </tbody>
+            </table>
+        </div>
+
+        {#-- new faq modal --#}
+        {% include 'admin/faq/new_faq_modal.html' %}
+        {#-- /new faq modal --#}
+    {% endwith %}
+    {#-- /faq section --#}
+{% endblock %}

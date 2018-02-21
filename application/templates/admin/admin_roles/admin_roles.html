@@ -1,0 +1,47 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Admin Roles{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <h2 class="text-center page-title">Admin Roles</h2>
+
+    {#-- admin_role list section --#}
+    <div id="admin_roles" class="container-fluid">
+        <div class="table-controls row">
+            <div class="col-lg-6 mt-2">
+                <form action="{{ url_for('admin.admin_roles') }}" method="get">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="submit">Search</button>
+                        </span>
+                        <input type="text" class="form-control" id="q" name="q" value="{{ request.args.get('q', '') }}">
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 col-lg-3 mt-2">
+                <select class="form-control"><option>Filter</option></select>
+            </div>
+            <div class="col-sm-6 col-lg-3 mt-2">
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newAdminRoleModal">
+                    New Admin Role
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-3">
+                {% include "admin/admin_roles/admin_role_update_js.html" %}
+                {% include "admin/admin_roles/admin_role_update_form.html" %}
+                {% include "admin/admin_roles/admin_roles_list.html" %}
+            </div>
+        </div>
+    </div>
+    {#-- /admin_role list section --#}
+
+    {#-- new admin_role modal --#}
+    {% include 'admin/admin_roles/new_admin_role_modal.html' %}
+    {#-- /new admin_role modal --#}
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Blog Posts{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        function modify_post(post_form) {
+            window.event.preventDefault();
+            var post_id = post_form.find('[name="post_id"]').val();
+            $('#load_icon_1').show();
+            var submission_data = post_form.serializeArray();
+            $.ajax({
+                type: 'POST',
+                data: submission_data,
+                url: "{{ url_for('admin.modify_post') }}",
+                success: function (data, status, request) {
+                    $('#post_'.concat(post_id)).html(data['render_html']['post_html']);
+                    alertSuccess(data);
+                    $('#load_icon_1').hide();
+                },
+                error: function (data, status, request) {
+                    alertError(data);
+                    $('#load_icon_1').hide();
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h2 class="text-center page-title">Blog Posts</h2>
+
+    {#-- post list section --#}
+    <div id="posts" class="container-fluid">
+        <div class="table-controls row">
+            <div class="col-lg-6 mt-2">
+                <form action="{{ url_for('admin.blog') }}" method="get">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="submit">Search</button>
+                        </span>
+                        <input type="text" class="form-control" id="q" name="q" value="{{ request.args.get('q', '') }}">
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 col-lg-3 mt-2">
+                <select class="form-control">
+                    <option>Filter</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-3 mt-2">
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                        data-target="#newPostModal">
+                    New Blog Post
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-3">
+                {% import 'macros/pagination.html' as mac_p with context %}
+
+                <table id="table-posts" class="table table-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th style="width:5%">
+                            <label for="select_all"></label>
+                            <input id="select_all" name="select_all" type="checkbox">
+                        </th>
+                        <th style="width:15%">{{ mac_p.sort('post', 'Author') }}</th>
+                        <th class="row_hide" style="width:20%">{{ mac_p.sort('title', 'Title') }}</th>
+                        <th style="width:15%">{{ mac_p.sort('active', 'Status') }}</th>
+                        <th style="width:5%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {# ---- post rows ---- #}
+                    {# TODO: put disclaimer that all times are Central Time Zone #}
+
+                    {% if item_pagination.items|length > 0 %}
+                        {% for post in item_pagination.items %}
+                            <tr id="post_{{ post.id }}" class="row_item">
+                                {% with chevron = "fa fa-chevron-up" %}
+                                    {% include "blog/admin/post_list_collapse_row.html" %}
+                                {% endwith %}
+                            </tr>
+                            <tr id="sub_data_post_{{ post.id }}" class="sub_data_parent" style="display: none;">
+                                {% include "blog/admin/post_list_expand_row.html" %}
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                <p>There are no posts.</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {# ---- /post rows ---- #}
+                    </tbody>
+                </table>
+
+                <div class="row justify-content-center offset-lg-1 col-lg-10" style="padding-top: 20px;">
+                    {{ mac_p.render_pagination(item_pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#-- /post list section --#}
+
+    {#-- new post modal --#}
+    {% include 'blog/admin/new_post_modal.html' %}
+    {#-- /new post modal --#}
+{% endblock %}

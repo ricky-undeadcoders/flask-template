@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+
+{% block title %}Resend Confirmation{% endblock %}
+
+{% block page_styles %}
+    <link href="{{ url_for('static', filename='css/security.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <h2 class="text-center login_title mb-5">Resend Confirmation</h2>
+    <div class="container col-sm-10 col-md-5 col-lg-4 text-center">
+        <form id="confirm_form" method="post" action="{{ url_for('login.resend_confirmation_email') }}">
+            {{ confirm_form.csrf_token }}
+            <div class="row">
+                <div class="form-group col-12">
+                    {{ confirm_form.email.label(class='sr-only') }}
+                    {{ confirm_form.email(size=20, class='form-control', placeholder='Enter Email', tabindex='1', required='') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    {{ confirm_form.captcha.label }}
+                    {{ confirm_form.captcha(class='form-control') }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <button class="btn btn-primary btn-block" tabindex="3" type="submit">Send Email</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

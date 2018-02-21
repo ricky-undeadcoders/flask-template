@@ -1,0 +1,34 @@
+<!-- new role modal -->
+<div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="newRoleModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newRoleModalTitle">New Role</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="new_add_role_form" method="post" action="{{ url_for('admin.add_role') }}">
+                    {{ add_role_form.csrf_token }}
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="name">Name </label>
+                            {{ add_role_form.name(class='form-control', type='text', required='') }}
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="description">Description </label>
+                            {{ add_role_form.description(class='form-control', type='text', required='') }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" onclick="$('#new_add_role_form').submit();">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /new role modal -->

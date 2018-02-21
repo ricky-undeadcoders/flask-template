@@ -1,0 +1,37 @@
+{% import 'macros/pagination.html' as mac_p with context %}
+
+<table id="table-roles" class="table table-condensed table-hover">
+    <thead>
+    <tr>
+        <th style="width:5%">
+            <label for="select_all"></label>
+            <input id="select_all" name="select_all" type="checkbox">
+        </th>
+        <th style="width:15%">{{ mac_p.sort('name', 'Name') }}</th>
+        <th class="row_hide" style="width:60%">{{ mac_p.sort('description', 'Description') }}</th>
+        <th style="width:15%">{{ mac_p.sort('active', 'Status') }}</th>
+        <th style="width:5%"></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {# ---- role rows ---- #}
+    {# TODO: put disclaimer that all times are Central Time Zone #}
+    {% if item_pagination.items|length > 0 %}
+        {% for role in item_pagination.items %}
+            {% include 'admin/roles/roles_list_row.html' %}
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">
+                <span>There are no roles.</span>
+            </td>
+        </tr>
+    {% endif %}
+    {# ---- /role rows ---- #}
+    </tbody>
+</table>
+
+<div class="row justify-content-center offset-lg-1 col-lg-10" style="padding-top: 20px;">
+    {{ mac_p.render_pagination(item_pagination) }}
+</div>

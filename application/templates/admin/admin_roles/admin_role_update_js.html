@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    function submit_admin_role_data(admin_role_id) {
+        window.event.preventDefault();
+        $('#load_icon_1').show();
+
+        var admin_role_div = $('#sub_data_admin_role_'.concat(admin_role_id));
+        var name = admin_role_div.find('[name="name_input"]').val();
+        var description = admin_role_div.find('[name="description_input"]').val();
+        var active = admin_role_div.find('[name="active_input"]').val();
+        $('#admin_role_id').val(admin_role_id);
+        $('#name').val(name);
+        $('#description').val(description);
+        $('#active').val(active);
+        var submission_data = $('#admin_role_info').serializeArray();
+        $.ajax({
+            type: 'POST',
+            data: submission_data,
+            url: "{{ url_for('admin.modify_admin_role')  }}",
+            success: function (data, status, request) {
+                $('#admin_role_'.concat(admin_role_id)).html(data['render_html']['admin_role_html']);
+                alertSuccess(data);
+                $('#load_icon_1').hide();
+            },
+            error: function (data, status, request) {
+                alertError(data);
+                $('#load_icon_1').hide();
+            }
+        });
+    }
+</script>

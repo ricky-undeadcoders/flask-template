@@ -1,0 +1,24 @@
+/*-------- status icons --------*/
+.row-item-active .status-icon {
+    color: white;
+    background-color: green;
+    border-color: green;
+}
+
+.row-item-inactive .status-icon {
+    color: white;
+    background-color: red;
+    border-color: red;
+}
+
+.activate-row-item-btn, .deactivate-row-item-btn {
+    padding-left: .7rem;
+    padding-right: .7rem;
+}
+
+.btn.disabled.status-icon {
+    padding-left: .8rem;
+    padding-right: .8rem;
+    opacity: 1;
+}
+/*-------- /status icons --------*/

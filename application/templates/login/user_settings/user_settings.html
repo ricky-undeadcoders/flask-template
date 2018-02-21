@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% block title %}User Settings{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div id="user_settings_title" class="section">
+        <div class="justify-content-center col-12">
+            <h2 class="page-title text-center">User Settings</h2>
+        </div>
+    </div>
+
+
+    {% include "login/user_settings/form_js.html" %}
+    <div id="name_form_wrapper" class="container">
+        {% include "login/user_settings/name_form.html" %}
+    </div>
+    <div id="password_form_wrapper" class="container">
+        {% include "login/user_settings/password_form.html" %}
+    </div>
+    <div id="username_form_wrapper" class="container">
+        {% include "login/user_settings/username_form.html" %}
+    </div>
+    <div id="email_form_wrapper" class="container">
+        {% include "login/user_settings/email_form.html" %}
+    </div>
+{% endblock %}

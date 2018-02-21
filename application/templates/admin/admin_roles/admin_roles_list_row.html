@@ -1,0 +1,8 @@
+<tr id="admin_role_{{ admin_role.id }}" class="row_item">
+    {% with chevron = "fa fa-chevron-up" %}
+        {% include "admin/admin_roles/admin_role_list_collapse_row.html" %}
+    {% endwith %}
+</tr>
+<tr id="sub_data_admin_role_{{ admin_role.id }}" class="sub_data_parent" style="display: none;">
+    {% include "admin/admin_roles/admin_role_list_expand_row.html" %}
+</tr>

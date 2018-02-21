@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ author.first_name }} {{ author.last_name }}{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column h-100 justify-content-start">
+        <div>
+            <div id="author_details_title" class="section mb-5">
+                <div class="justify-content-center col-12">
+                    <h1 class="page-title text-center">Author Details</h1>
+                    <div class="row justify-content-center">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="{{ url_for('main.index') }}">Home</a>
+                            <a class="breadcrumb-item" href="{{ url_for('blog.blog') }}">Blog</a>
+                            <a class="breadcrumb-item" href="{{ url_for('blog.authors') }}">Authors</a>
+                            <span class="breadcrumb-item active">{{ author.first_name }} {{ author.last_name }}</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="author_details_section" class="container">
+                <div class="row">
+                    {% set id = author.id %}
+                    {% set name = '{} {}'.format(author.first_name, author.last_name) %}
+                    <div id="author_{{ id }}" class="col-12 tile-row">
+                        <h2>{{ name }}</h2>
+                        <div class="author-info mb-4">
+
+                        </div>
+                        {{ author.bio.text|safe }}
+                    </div>
+                </div>
+            </div>
+            <div id="recent_posts_section" class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Recent Blog Posts</h4>
+                        <hr>
+                        {% for post in g.datastore.find_all_posts(order_by='-create_date', user_id=author.id)[:5] %}
+                            {% set post_index = loop.index %}
+                            <div class="row">
+                                {% set id = post.id %}
+                                {% set date, time = post.create_date|split_datetime %}
+                                {% set pretty_post_date = date|pretty_date %}
+                                {% set pretty_post_time = time|pretty_time %}
+                                {% set author = post.user %}
+                                <div id="post_{{ id }}" class="col-12 tile-row">
+                                    <h4><a href="{{ url_for('blog.blog_post', post_id=id) }}">{{ post.title }}</a></h4>
+                                    <div class="post-info mb-4">
+                                        by <a href="{{ url_for('blog.author_details', user_id=author.id) }}"><i><b>{{ author.username }}</b></i></a>
+                                        <br>
+                                        <b>{{ pretty_post_date }}</b> - {{ pretty_post_time }}
+                                    </div>
+                                    {% if post_index == 1 %}
+                                        {% set truncate_length = config.get('BLOG_POST_FIRST_TRUNCATION_LENGTH', 1200) %}
+                                    {% else %}
+                                        {% set truncate_length = config.get('BLOG_POST_TRUNCATION_LENGTH', 600) %}
+                                    {% endif %}
+                                    {{ post.body|safe|truncate(truncate_length, False, '') }}<small><a href="{{ url_for('blog.blog_post', post_id=id) }}">...continue</a></small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

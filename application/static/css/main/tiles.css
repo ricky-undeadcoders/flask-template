@@ -1,0 +1,8 @@
+.tile-row {
+    padding: 1rem;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 2px 2px 8px;
+}

@@ -1,0 +1,96 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Padding bottom by footer height */
+    /*padding-bottom: 65px;*/
+}
+
+.footer {
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    width: 100%;
+    justify-self: end;
+    /* Set the fixed height of the footer here */
+    height: 65px;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+/*---- footer ----*/
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: none;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+footer .list-inline {
+    margin-bottom: 0;
+}
+
+footer .footer-col {
+    margin-bottom: 10px;
+}
+
+footer .container {
+    padding-top: 3px;
+}
+
+.list-inline > li {
+    display: inline-block;
+}
+
+.btn-social {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 40px;
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+}
+
+.btn-social:hover,
+.btn-social:focus,
+.btn-social:active {
+    background: black;
+    color: white;
+}
+
+/*---- subscribe ----*/
+form#subs {
+    width: 100%;
+}
+
+#sub_section .input-group {
+    width: 100%;
+}
+
+#sub_section .input-group-addon {
+    background-color: white;
+    color: #5bc0de;
+    border: 1px solid #5bc0de;
+}
+
+#sub_section .btn-outline-info:hover {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+}
+
+/*---- /subscribe ----*/
+
+/*---- /footer ----*/

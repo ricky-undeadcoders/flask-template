@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+
+{% set id = post.id %}
+{% set date, time = post.create_date|split_datetime %}
+{% set pretty_post_date = date|pretty_date %}
+{% set pretty_post_time = time|pretty_time %}
+{% set author = post.user %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block page_styles %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-column h-100 justify-content-start">
+        <div>
+            <div id="blog_post_title" class="section mb-5">
+                <div class="justify-content-center col-12">
+                    <h1 class="page-title text-center">Blog Post</h1>
+                    <div class="row justify-content-center">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="{{ url_for('main.index') }}">Home</a>
+                            <a class="breadcrumb-item" href="{{ url_for('blog.blog') }}">Blog</a>
+                            <span class="breadcrumb-item active">{{ post.title|truncate(25) }}</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="blog_post_section" class="container">
+                <div class="row">
+                    <div id="post_{{ id }}" class="col-12 tile-row">
+                        <h2>{{ post.title }}</h2>
+                        <hr>
+                        <div class="post-info mb-4">
+                            by <a href="{{ url_for('blog.author_details', user_id=author.id) }}"><i><strong>{{ author.username }}</strong></i></a>
+                            <br>
+                            <b>{{ pretty_post_date }}</b> - {{ pretty_post_time }}
+                        </div>
+                        {{ post.body|safe }}
+                    </div>
+                </div>
+            </div>
+{#            <div id="blog_post_comments_section" class="container mt-2">#}
+{#                <div class="row">#}
+{#                    <div class="col-12 tile-row">#}
+{#                        <div id="comment_section_header" class="d-flex flex-row justify-content-between">#}
+{#                            <div>#}
+{#                                Comments#}
+{#                            </div>#}
+{#                            <div>#}
+{#                                <button type="button" class="btn btn-sm btn-primary float-left" data-toggle="modal"#}
+{#                                        data-target="#newCommentModal">#}
+{#                                    New Comment#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <hr>#}
+{#                        <br>#}
+{#                        {% for comment in post.comments %}#}
+{#                            {% include 'main/blog/blog_post_comment_row.html' %}#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </div>
+    {#-- new comment modal --#}
+    {% include 'main/blog/new_comment_modal.html' %}
+    {#-- /new comment modal --#}
+{% endblock %}

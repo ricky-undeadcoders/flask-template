@@ -1,0 +1,58 @@
+<!-- Fixed navbar -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a id="navbar_brand" class="navbar-brand" href="{{ url_for('main.index') }}">UCS</a>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="nav navbar-nav w-100 justify-content-end align-items-end text-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{{ url_for('blog.blog') }}" id="dropdown-blog"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown-blog">
+                    <a class="dropdown-item" href="{{ url_for('blog.blog') }}">Posts</a>
+                    <a class="dropdown-item" href="{{ url_for('blog.authors') }}">Authors</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.faq') }}">FAQ</a>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown_user" href="" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        <i class="fa fa-user-circle-o"
+                           aria-hidden="true"></i>
+                        {{ current_user.username or current_user.email }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_user">
+                        <a class="dropdown-item" id="user_settings" href="{{ url_for('login.user_settings') }}">User
+                            Settings</a>
+                        {% if current_user.is_admin_user %}
+                            <a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">Admin</a>
+                        {% endif %}
+                        <a class="dropdown-item" id="logout" href="{{ url_for('login.logout') }}">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> <b>Logout</b>
+                        </a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+                    </a>
+                    {% include 'login/login_navbar.html' %}
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

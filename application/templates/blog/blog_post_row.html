@@ -1,0 +1,22 @@
+<div class="row">
+    {% set id = post.id %}
+    {% set date, time = post.create_date|split_datetime %}
+    {% set pretty_post_date = date|pretty_date %}
+    {% set pretty_post_time = time|pretty_time %}
+    {% set author = post.user %}
+    <div id="post_{{ id }}" class="col-12 tile-row">
+        <h2><a href="{{ url_for('blog.blog_post', post_id=id) }}">{{ post.title }}</a></h2>
+        <hr>
+        <div class="post-info mb-4">
+            by <a href="{{ url_for('blog.author_details', user_id=author.id) }}"><i><b>{{ author.username }}</b></i></a>
+            <br>
+            <b>{{ pretty_post_date }}</b> - {{ pretty_post_time }}
+        </div>
+        {% if post_index == 1 %}
+            {% set truncate_length = config.get('BLOG_POST_FIRST_TRUNCATION_LENGTH', 1200) %}
+        {% else %}
+            {% set truncate_length = config.get('BLOG_POST_TRUNCATION_LENGTH', 1200) %}
+        {% endif %}
+        {{ post.body|safe|truncate(truncate_length, False, '') }}<small><a href="{{ url_for('blog.blog_post', post_id=id) }}">...continue</a></small>
+    </div>
+</div>

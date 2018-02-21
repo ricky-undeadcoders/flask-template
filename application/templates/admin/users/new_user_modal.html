@@ -1,0 +1,46 @@
+<!-- new user modal -->
+<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newUserModalTitle">New User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="new_add_user_form" method="post" action="{{ url_for('admin.add_user') }}">
+                    {{ add_user_form.csrf_token }}
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="username">UserName </label>
+                            {{ add_user_form.username(class='form-control', type='text', required='') }}
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="email">Email </label>
+                            {{ add_user_form.email(class='form-control', type='email', required='') }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="first_name">First Name </label>
+                            {{ add_user_form.first_name(class='form-control', type='text') }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="last_name">Last Name </label>
+                            {{ add_user_form.last_name(class='form-control', type='text') }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" onclick="$('#new_add_user_form').submit();">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /new user modal -->

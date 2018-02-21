@@ -1,0 +1,35 @@
+{% set login_form = config['LOGIN_FORM']() %}
+<ul id="login-dp" class="dropdown-menu dropdown-menu-right logged-out">
+    <li>
+        <div class="row">
+            <div class="col-12">
+                <form id="login_user_form_nav" class="form" role="form" method="POST" action="{{ url_for('login.login') }}"
+                      name="login_user_form_nav" accept-charset="UTF-8">
+                    {{ login_form.csrf_token }}
+                    <div class="form-group flex-group">
+                        <label class="sr-only" for="username">Email</label>
+                        {{ login_form.username(size=20, class='form-control', placeholder='User Name', tabindex='1') }}
+                    </div>
+                    <div class="form-group flex-group">
+                        <label class="sr-only" for="password">Password</label>
+                        {{ login_form.password(size=20, class='form-control', placeholder='Password', tabindex='2') }}
+                    </div>
+                    <div class="form-group flex-group">
+                        <div class="help-block text-center"><a href="{{ url_for('login.forgot_password') }}" tabindex="5">Forget the password?</a></div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" tabindex="3">Sign in</button>
+                    </div>
+                    <div class="checkbox text-center">
+                        <label>
+                            {{ login_form.remember(class='checkbox', tabindex='4') }}  keep me logged-in
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="bottom text-center col-12">
+                New here ? <a href="{{ url_for('login.register') }}" tabindex="6"><b>Join Us</b></a>
+            </div>
+        </div>
+    </li>
+</ul>
